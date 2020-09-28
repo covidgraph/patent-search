@@ -143,20 +143,6 @@ function PatentList(props: any) {
                 </Tooltip>
               </TableCell>
               <TableCell
-                key="name"
-                sortDirection={orderBy === 'name' ? order : false}
-              >
-                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'name'}
-                    direction={order}
-                    onClick={() => handleSortRequest('name')}
-                  >
-                    Name
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-              <TableCell
                 key="title"
                 sortDirection={orderBy === 'lang' ? order : false}
               >
@@ -176,9 +162,6 @@ function PatentList(props: any) {
                 <TableRow key={n.patentId}>
                   <TableCell component="th" scope="row">
                     {n.patentId}
-                  </TableCell>
-                  <TableCell>
-                    {n.name}
                   </TableCell>
                   <TableCell>
                     {n.patentTitle.map((title: PatentTitle, i: number) => {
