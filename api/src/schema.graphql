@@ -37,6 +37,7 @@ type PatentTitle {
   lang: String!
   text: String!
   patents: [Patent] @relation(name: "PATENT_HAS_PATENTTITLE", direction: "IN")
+  fragments: [Fragment] @relation(name: "HAS_FRAGMENT", direction: "OUT")
 }
 
 type PatentAbstract {
@@ -44,4 +45,15 @@ type PatentAbstract {
   lang: String!
   text: String!
   patents: [Patent] @relation(name: "PATENT_HAS_PATENTABSTRACT", direction: "IN")
+}
+
+type Fragment {
+  _hash_id: String!
+  dummy_field: String
+  mentions: [GeneSymbol] @relation(name: "MENTIONS", direction: "OUT")
+}
+
+type GeneSymbol{
+  sid: String!
+  dummy_field: String
 }

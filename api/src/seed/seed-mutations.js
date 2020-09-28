@@ -16,6 +16,7 @@ const generateMutations = (records) => {
     rec['patentTitleId'] = md5sum
       .update(rec.patentId + '-' + rec.patentTitle + '-' + rec.patentTitleLang)
       .digest('hex')
+    rec['patentTitleFragmentId'] = rec['patentTitleId']
 
     md5sum = crypto.createHash('md5')
     rec['patentAbstractId'] = md5sum
@@ -38,6 +39,8 @@ const generateMutations = (records) => {
           $patentAbstractId: String!
           $patentAbstractText: String
           $patentAbstractLang: String
+          $patentTitleFragmentId: String!
+          $geneSymbol: String!
         ) {
           patent: MergePatent(patentId: $patentId, name: $patentTitle) {
             _id
@@ -77,6 +80,39 @@ const generateMutations = (records) => {
           ) {
             from {
               patentId
+            }
+          }
+
+          fragment: MergeFragment(
+            _hash_id: $patentTitleFragmentId
+            dummy_field: $patentTitleFragmentId
+          ) {
+            _id
+            _hash_id
+          }
+
+          fragmentPatentTitle: MergePatentTitleFragments(
+            from: { _hash_id: $patentTitleId }
+            to: { _hash_id: $patentTitleFragmentId }
+          ) {
+            from {
+              _hash_id
+            }
+          }
+
+          geneSymbol: MergeGeneSymbol(
+            sid: $geneSymbol
+            dummy_field: $geneSymbol
+          ) {
+            sid
+          }
+
+          fragmentMentions: MergeFragmentMentions(
+            from: { _hash_id: $patentTitleFragmentId }
+            to: { sid: $geneSymbol }
+          ) {
+            from {
+              _hash_id
             }
           }
         }

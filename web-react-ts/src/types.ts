@@ -9,6 +9,7 @@ export type PatentTitle = {
   _hash_id: string;
   lang: string;
   text: string;
+  fragments: Fragment[];
 }
 
 export type PatentAbstract = {
@@ -17,4 +18,10 @@ export type PatentAbstract = {
   text: string;
 }
 
+export type Fragment = {
+  mentions: GeneSymbol[];
+}
 
+export type GeneSymbol = {
+  sid: string;
+}

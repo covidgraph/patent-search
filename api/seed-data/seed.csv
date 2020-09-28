@@ -1,13 +1,14 @@
-patentId,patentTitle,patentTitleLang,patentAbstractText,patentAbstractLang
-1,My first patent,en,This is the abstract for my first patent,en
-2,Batmobile,en,The patent describes the Batmobile patent,en
-3,Another patent for dogs,en,Unique term: ardvark,en
-4,Patent beta,en,This is a generic patent abstract,en
-5,Foo,en,This is some text that includes the word beta,en
-5,Foo in French,fr,French abstract,fr
-6,Bar,en,This is a generic patent abstract,en
-7,Foo Bar,fr,This is a generic patent abstract,en
-7,Foo Bar,ge,This is a generic patent abstract in German,ge
-7,Foo Bar,en,This is a generic patent abstract in French,fr
-8,French only,fr,This is a generic patent abstract in French,fr
-9,German only,ge,This is a generic patent abstract in German,en
+patentId,patentTitle,patentTitleLang,patentAbstractText,patentAbstractLang,geneSymbol
+1,My first patent,en,This is the abstract for my first patent,en,gene-alpha
+2,Batmobile,en,The patent describes the Batmobile patent,en,gene-beta
+3,Another patent for dogs,en,Unique term: ardvark,en,gene-alpha
+3,Another patent for dogs,en,Unique term: ardvark,en,gene-beta
+4,Patent beta,en,This is a generic patent abstract,en,delta
+5,Foo,en,This is some text that includes the word beta,en,delta
+5,Foo in French,fr,French abstract,fr,delta
+6,Bar,en,This is a generic patent abstract,en,gamma
+7,Foo Bar,fr,This is a generic patent abstract,en,gamma
+7,Foo Bar,ge,This is a generic patent abstract in German,ge,gamma
+7,Foo Bar,en,This is a generic patent abstract in French,fr,gamma
+8,French only,fr,This is a generic patent abstract in French,fr,gamma
+9,German only,ge,This is a generic patent abstract in German,en,gamma

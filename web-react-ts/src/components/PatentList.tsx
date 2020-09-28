@@ -15,7 +15,7 @@ import {
 import { useQuery, gql } from '@apollo/client';
 
 import Title from './Title'
-import { Patent, PatentTitle, PatentAbstract } from '../types';
+import { Patent, PatentTitle, PatentAbstract, Fragment, GeneSymbol } from '../types';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -47,6 +47,12 @@ const GET_PATENT = gql`
       patentTitle{
         text
         lang
+        fragments{
+          _hash_id
+          mentions{
+            sid
+          }
+        }
       }
       patentAbstract{
         text
@@ -154,6 +160,11 @@ function PatentList(props: any) {
               >
                 <div>Abstract</div>
               </TableCell>
+              <TableCell
+                key="gene_symbols"
+              >
+                <div>Gene Symbols</div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -176,6 +187,18 @@ function PatentList(props: any) {
                         {title.lang}: {title.text}
                       </div>
                     })}
+                  </TableCell>
+                  <TableCell>
+                    {n.patentTitle.map((title: PatentTitle, i: number) => {
+                      return title.fragments.map((fragment: Fragment, j: number) => {
+                        return fragment.mentions.map((geneSymbol: GeneSymbol, k: number) => {
+                          return <div key={i + "-" + j + "-" + k}>
+                            {geneSymbol.sid}
+                          </div>
+                        })
+                      })
+                    })
+                    }
                   </TableCell>
                 </TableRow>
               )
