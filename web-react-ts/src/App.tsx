@@ -9,7 +9,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import {
   CssBaseline,
   Drawer,
-  Box,
   AppBar,
   Toolbar,
   List,
@@ -17,7 +16,6 @@ import {
   Divider,
   IconButton,
   Container,
-  Link as MUILink,
   ListItem,
   ListItemText,
   ListItemIcon,
@@ -28,19 +26,6 @@ import {
   Menu as MenuIcon,
   FindInPage as FindInPageIcon
 } from '@material-ui/icons'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <MUILink color="inherit" href="https://grandstack.io/">
-        Your GRANDstack App Name Here
-      </MUILink>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const drawerWidth = 240
 
@@ -209,10 +194,6 @@ export default function App() {
             <Switch>
               <Route exact path="/" component={PatentList} />
             </Switch>
-
-            <Box pt={4}>
-              <Copyright />
-            </Box>
           </Container>
         </main>
       </div>
