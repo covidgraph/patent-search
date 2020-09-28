@@ -1,95 +1,53 @@
-const fetch = require('node-fetch')
+const fs = require('fs').promises
+var crypto = require('crypto')
 const parse = require('csv-parse/lib/sync')
 const { gql } = require('@apollo/client')
 
 export const getSeedMutations = async () => {
-  const res = await fetch(
-    'https://cdn.neo4jlabs.com/data/grandstack_businesses.csv'
-  )
-  const body = await res.text()
-  const records = parse(body, { columns: true })
+  const content = await fs.readFile(`seed-data/seed.csv`)
+  const records = parse(content, { columns: true })
   const mutations = generateMutations(records)
-
   return mutations
 }
 
 const generateMutations = (records) => {
   return records.map((rec) => {
-    Object.keys(rec).map((k) => {
-      if (k === 'latitude' || k === 'longitude' || k === 'reviewStars') {
-        rec[k] = parseFloat(rec[k])
-      } else if (k === 'reviewDate') {
-        const dateParts = rec[k].split('-')
-        rec['year'] = parseInt(dateParts[0])
-        rec['month'] = parseInt(dateParts[1])
-        rec['day'] = parseInt(dateParts[2])
-      } else if (k === 'categories') {
-        rec[k] = rec[k].split(',')
-      }
-    })
+    const md5sum = crypto.createHash('md5')
+    rec['patentTitleId'] = md5sum
+      .update(
+        rec.patentTitleId + '-' + rec.patentTitle + '-' + rec.patentTitleLang
+      )
+      .digest('hex')
 
     return {
       mutation: gql`
-        mutation mergeReviews(
-          $userId: ID!
-          $userName: String
-          $businessId: ID!
-          $businessName: String
-          $businessCity: String
-          $businessState: String
-          $businessAddress: String
-          $latitude: Float
-          $longitude: Float
-          $reviewId: ID!
-          $reviewText: String
-          $year: Int
-          $month: Int
-          $day: Int
-          $reviewStars: Float
-          $categories: [String!]!
+        mutation mergePatent(
+          $patentId: String!
+          $patentTitleId: String!
+          $patentTitle: String!
+          $patentTitleLang: String
         ) {
-          user: MergeUser(userId: $userId, name: $userName) {
-            userId
+          patent: MergePatent(patentId: $patentId, name: $patentTitle) {
+            _id
+            patentId
           }
-          business: MergeBusiness(
-            businessId: $businessId
-            name: $businessName
-            address: $businessAddress
-            city: $businessCity
-            state: $businessState
-            location: { latitude: $latitude, longitude: $longitude }
+
+          patentTitle: MergePatentTitle(
+            _hash_id: $patentTitleId
+            lang: $patentTitleLang
+            text: $patentTitle
           ) {
-            businessId
+            _id
+            _hash_id
           }
-          review: MergeReview(
-            reviewId: $reviewId
-            text: $reviewText
-            date: { year: $year, month: $month, day: $day }
-            stars: $reviewStars
-          ) {
-            reviewId
-          }
-          reviewUser: MergeReviewUser(
-            from: { userId: $userId }
-            to: { reviewId: $reviewId }
+
+          patentTitlePatent: MergePatentTitlePatents(
+            from: { patentId: $patentId }
+            to: { _hash_id: $patentTitleId }
           ) {
             from {
-              userId
+              patentId
             }
-          }
-          reviewBusiness: MergeReviewBusiness(
-            from: { reviewId: $reviewId }
-            to: { businessId: $businessId }
-          ) {
-            from {
-              reviewId
-            }
-          }
-          businessCategories: mergeBusinessCategory(
-            categories: $categories
-            businessId: $businessId
-          ) {
-            businessId
           }
         }
       `,
