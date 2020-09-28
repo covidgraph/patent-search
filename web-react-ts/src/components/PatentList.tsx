@@ -145,6 +145,14 @@ function PatentList(props: any) {
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
+              <TableCell
+                key="lang"
+                sortDirection={orderBy === 'lang' ? order : false}
+              >
+                <Tooltip title="Lang" placement="bottom-end" enterDelay={300}>
+                  <div>Title</div>
+                </Tooltip>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -157,13 +165,21 @@ function PatentList(props: any) {
                   <TableCell>
                     {n.name}
                   </TableCell>
+                  <TableCell>
+                    {n.patentTitle.map((title: any, i: number) => {
+                      return <div key={i}>
+                        {title.lang}: {title.text}
+                      </div>
+                    })}
+                  </TableCell>
                 </TableRow>
               )
             })}
           </TableBody>
         </Table>
-      )}
-    </Paper>
+      )
+      }
+    </Paper >
   )
 }
 
