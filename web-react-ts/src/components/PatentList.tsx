@@ -33,37 +33,39 @@ const styles = (theme: Theme) => createStyles({
   },
 })
 
-const GET_USER = gql`
-  query usersPaginateQuery(
+const GET_PATENT = gql`
+  query patentPaginateQuery(
     $first: Int
     $offset: Int
-    $orderBy: [_UserOrdering]
-    $filter: _UserFilter
+    $orderBy: [_PatentOrdering]
+    $filter: _PatentFilter
   ) {
-    User(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
-      id: userId
+    Patent(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
+      id: patentId
       name
-      avgStars
-      numReviews
+      patentTitle{
+        text
+        lang
+      }
     }
   }
 `
 
-function UserList(props: any) {
+function PatentList(props: any) {
   const { classes } = props
   const [order, setOrder] = React.useState<'asc' | 'desc'>('asc')
   const [orderBy, setOrderBy] = React.useState('name')
   const [page] = React.useState(0)
   const [rowsPerPage] = React.useState(10)
-  const [filterState, setFilterState] = React.useState({ usernameFilter: '' })
+  const [filterState, setFilterState] = React.useState({ searchTermFilter: '' })
 
   const getFilter = () => {
-    return filterState.usernameFilter.length > 0
-      ? { name_contains: filterState.usernameFilter }
+    return filterState.searchTermFilter.length > 0
+      ? { name_contains: filterState.searchTermFilter }
       : {}
   }
 
-  const { loading, data, error } = useQuery(GET_USER, {
+  const { loading, data, error } = useQuery(GET_PATENT, {
     variables: {
       first: rowsPerPage,
       offset: rowsPerPage * page,
@@ -95,13 +97,13 @@ function UserList(props: any) {
 
   return (
     <Paper className={classes.root}>
-      <Title>User List</Title>
+      <Title>Patent List</Title>
       <TextField
         id="search"
-        label="User Name Contains"
+        label="Search"
         className={classes.textField}
-        value={filterState.usernameFilter}
-        onChange={handleFilterChange('usernameFilter')}
+        value={filterState.searchTermFilter}
+        onChange={handleFilterChange('searchTermFilter')}
         margin="normal"
         variant="outlined"
         type="text"
@@ -116,10 +118,24 @@ function UserList(props: any) {
           <TableHead>
             <TableRow>
               <TableCell
+                key="id"
+                sortDirection={orderBy === 'id' ? order : false}
+              >
+                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
+                  <TableSortLabel
+                    active={orderBy === 'id'}
+                    direction={order}
+                    onClick={() => handleSortRequest('patentId')}
+                  >
+                    ID
+                  </TableSortLabel>
+                </Tooltip>
+              </TableCell>
+              <TableCell
                 key="name"
                 sortDirection={orderBy === 'name' ? order : false}
               >
-                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
+                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
                   <TableSortLabel
                     active={orderBy === 'name'}
                     direction={order}
@@ -129,47 +145,18 @@ function UserList(props: any) {
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
-              <TableCell
-                key="avgStars"
-                sortDirection={orderBy === 'avgStars' ? order : false}
-              >
-                <Tooltip title="Sort" placement="bottom-end" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'avgStars'}
-                    direction={order}
-                    onClick={() => handleSortRequest('avgStars')}
-                  >
-                    Average Stars
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
-              <TableCell
-                key="numReviews"
-                sortDirection={orderBy === 'numReviews' ? order : false}
-              >
-                <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
-                  <TableSortLabel
-                    active={orderBy === 'numReviews'}
-                    direction={order}
-                    onClick={() => handleSortRequest('numReviews')}
-                  >
-                    Number of Reviews
-                  </TableSortLabel>
-                </Tooltip>
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.User.map((n: any) => {
+            {data.Patent.map((n: any) => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">
-                    {n.name}
+                    {n.id}
                   </TableCell>
                   <TableCell>
-                    {n.avgStars ? n.avgStars.toFixed(2) : '-'}
+                    {n.name}
                   </TableCell>
-                  <TableCell>{n.numReviews}</TableCell>
                 </TableRow>
               )
             })}
@@ -180,4 +167,4 @@ function UserList(props: any) {
   )
 }
 
-export default withStyles(styles)(UserList)
+export default withStyles(styles)(PatentList)
