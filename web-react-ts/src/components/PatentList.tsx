@@ -15,6 +15,7 @@ import {
 import { useQuery, gql } from '@apollo/client';
 
 import Title from './Title'
+import { Patent, PatentTitle } from '../types';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -156,7 +157,7 @@ function PatentList(props: any) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.Patent.map((n: any) => {
+            {data.Patent.map((n: Patent) => {
               return (
                 <TableRow key={n.id}>
                   <TableCell component="th" scope="row">
@@ -166,7 +167,7 @@ function PatentList(props: any) {
                     {n.name}
                   </TableCell>
                   <TableCell>
-                    {n.patentTitle.map((title: any, i: number) => {
+                    {n.patentTitle.map((title: PatentTitle, i: number) => {
                       return <div key={i}>
                         {title.lang}: {title.text}
                       </div>
