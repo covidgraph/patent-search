@@ -65,9 +65,15 @@ function PatentList(props: any) {
   const [filterState, setFilterState] = React.useState({ searchTermFilter: '' })
 
   const getFilter = () => {
-    return filterState.searchTermFilter.length > 0
-      ? { name_contains: filterState.searchTermFilter }
-      : {}
+    if (filterState.searchTermFilter.length > 0) {
+      return {
+        OR: [
+          { patentTitle_some: { text_contains: filterState.searchTermFilter } },
+          { patentAbstract_some: { text_contains: filterState.searchTermFilter } }
+        ]
+      }
+    }
+    return {};
   }
 
   const { loading, data, error } = useQuery(GET_PATENT, {

@@ -1,9 +1,10 @@
 patentId,patentTitle,patentTitleLang,patentAbstractText,patentAbstractLang
 1,My first patent,en,This is the abstract for my first patent,en
 2,Batmobile,en,The patent describes the Batmobile patent,en
-3,Another patent,en,This is a generic patent abstract,en
-4,Patent Beta,en,This is a generic patent abstract,en
-5,Foo,en,This is a generic patent abstract,en
+3,Another patent for dogs,en,Unique term: ardvark,en
+4,Patent beta,en,This is a generic patent abstract,en
+5,Foo,en,This is some text that includes the word beta,en
+5,Foo in French,fr,French abstract,fr
 6,Bar,en,This is a generic patent abstract,en
 7,Foo Bar,fr,This is a generic patent abstract,en
 7,Foo Bar,ge,This is a generic patent abstract in German,ge
