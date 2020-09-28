@@ -15,7 +15,7 @@ import {
 import { useQuery, gql } from '@apollo/client';
 
 import Title from './Title'
-import { Patent, PatentTitle } from '../types';
+import { Patent, PatentTitle, PatentAbstract } from '../types';
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -42,9 +42,13 @@ const GET_PATENT = gql`
     $filter: _PatentFilter
   ) {
     Patent(first: $first, offset: $offset, orderBy: $orderBy, filter: $filter) {
-      id: patentId
+      patentId
       name
       patentTitle{
+        text
+        lang
+      }
+      patentAbstract{
         text
         lang
       }
@@ -120,11 +124,11 @@ function PatentList(props: any) {
             <TableRow>
               <TableCell
                 key="id"
-                sortDirection={orderBy === 'id' ? order : false}
+                sortDirection={orderBy === 'patentId' ? order : false}
               >
                 <Tooltip title="Sort" placement="bottom-start" enterDelay={300}>
                   <TableSortLabel
-                    active={orderBy === 'id'}
+                    active={orderBy === 'patentId'}
                     direction={order}
                     onClick={() => handleSortRequest('patentId')}
                   >
@@ -147,27 +151,38 @@ function PatentList(props: any) {
                 </Tooltip>
               </TableCell>
               <TableCell
-                key="lang"
+                key="title"
                 sortDirection={orderBy === 'lang' ? order : false}
               >
-                <Tooltip title="Lang" placement="bottom-end" enterDelay={300}>
-                  <div>Title</div>
-                </Tooltip>
+                <div>Title</div>
+              </TableCell>
+              <TableCell
+                key="abstract"
+                sortDirection={orderBy === 'lang' ? order : false}
+              >
+                <div>Abstract</div>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.Patent.map((n: Patent) => {
               return (
-                <TableRow key={n.id}>
+                <TableRow key={n.patentId}>
                   <TableCell component="th" scope="row">
-                    {n.id}
+                    {n.patentId}
                   </TableCell>
                   <TableCell>
                     {n.name}
                   </TableCell>
                   <TableCell>
                     {n.patentTitle.map((title: PatentTitle, i: number) => {
+                      return <div key={i}>
+                        {title.lang}: {title.text}
+                      </div>
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {n.patentAbstract.map((title: PatentAbstract, i: number) => {
                       return <div key={i}>
                         {title.lang}: {title.text}
                       </div>

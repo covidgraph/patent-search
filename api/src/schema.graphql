@@ -28,6 +28,7 @@ type Patent {
   patentId: String!
   name: String! # just for debug
   patentTitle: [PatentTitle] @relation(name: "PATENT_HAS_PATENTTITLE", direction: "OUT")
+  patentAbstract: [PatentAbstract] @relation(name: "PATENT_HAS_PATENTABSTRACT", direction: "OUT")
 }
 
 
@@ -36,4 +37,11 @@ type PatentTitle {
   lang: String!
   text: String!
   patents: [Patent] @relation(name: "PATENT_HAS_PATENTTITLE", direction: "IN")
+}
+
+type PatentAbstract {
+  _hash_id: String!
+  lang: String!
+  text: String!
+  patents: [Patent] @relation(name: "PATENT_HAS_PATENTABSTRACT", direction: "IN")
 }

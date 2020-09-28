@@ -12,10 +12,19 @@ export const getSeedMutations = async () => {
 
 const generateMutations = (records) => {
   return records.map((rec) => {
-    const md5sum = crypto.createHash('md5')
+    let md5sum = crypto.createHash('md5')
     rec['patentTitleId'] = md5sum
+      .update(rec.patentId + '-' + rec.patentTitle + '-' + rec.patentTitleLang)
+      .digest('hex')
+
+    md5sum = crypto.createHash('md5')
+    rec['patentAbstractId'] = md5sum
       .update(
-        rec.patentTitleId + '-' + rec.patentTitle + '-' + rec.patentTitleLang
+        rec.patentId +
+          '-' +
+          rec.patentAbstractText +
+          '-' +
+          rec.patentAbstractLang
       )
       .digest('hex')
 
@@ -26,6 +35,9 @@ const generateMutations = (records) => {
           $patentTitleId: String!
           $patentTitle: String!
           $patentTitleLang: String
+          $patentAbstractId: String!
+          $patentAbstractText: String
+          $patentAbstractLang: String
         ) {
           patent: MergePatent(patentId: $patentId, name: $patentTitle) {
             _id
@@ -44,6 +56,24 @@ const generateMutations = (records) => {
           patentTitlePatent: MergePatentTitlePatents(
             from: { patentId: $patentId }
             to: { _hash_id: $patentTitleId }
+          ) {
+            from {
+              patentId
+            }
+          }
+
+          patentAbstract: MergePatentAbstract(
+            _hash_id: $patentAbstractId
+            lang: $patentAbstractLang
+            text: $patentAbstractText
+          ) {
+            _id
+            _hash_id
+          }
+
+          patentAbstractPatent: MergePatentAbstractPatents(
+            from: { patentId: $patentId }
+            to: { _hash_id: $patentAbstractId }
           ) {
             from {
               patentId

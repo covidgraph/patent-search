@@ -1,12 +1,12 @@
-patentId,patentTitle,patentTitleLang
-1,My first patent,en
-2,Batmobile,en
-3,Another patent,en
-4,Patent Beta,en
-5,Foo,en
-6,Bar,en
-7,Foo Bar,fr
-7,Foo Bar,ge
-7,Foo Bar,en
-8,French only,fr
-9,German only,ge
+patentId,patentTitle,patentTitleLang,patentAbstractText,patentAbstractLang
+1,My first patent,en,This is the abstract for my first patent,en
+2,Batmobile,en,The patent describes the Batmobile patent,en
+3,Another patent,en,This is a generic patent abstract,en
+4,Patent Beta,en,This is a generic patent abstract,en
+5,Foo,en,This is a generic patent abstract,en
+6,Bar,en,This is a generic patent abstract,en
+7,Foo Bar,fr,This is a generic patent abstract,en
+7,Foo Bar,ge,This is a generic patent abstract in German,ge
+7,Foo Bar,en,This is a generic patent abstract in French,fr
+8,French only,fr,This is a generic patent abstract in French,fr
+9,German only,ge,This is a generic patent abstract in German,en

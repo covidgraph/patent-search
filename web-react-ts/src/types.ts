@@ -1,7 +1,8 @@
 export type Patent = {
-  id: string;
+  patentId: string;
   name: string;
   patentTitle: PatentTitle[]
+  patentAbstract: PatentAbstract[]
 }
 
 export type PatentTitle = {
@@ -9,4 +10,11 @@ export type PatentTitle = {
   lang: string;
   text: string;
 }
+
+export type PatentAbstract = {
+  _hash_id: string;
+  lang: string;
+  text: string;
+}
+
 
