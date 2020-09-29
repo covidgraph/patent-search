@@ -75,7 +75,16 @@ function PatentList(props: any) {
       return {
         OR: [
           { patentTitle_some: { text_contains: filterState.searchTermFilter } },
-          { patentAbstract_some: { text_contains: filterState.searchTermFilter } }
+          { patentAbstract_some: { text_contains: filterState.searchTermFilter } },
+          {
+            patentTitle_some: {
+              fragments_some: {
+                mentions_some: {
+                  sid_contains: filterState.searchTermFilter
+                }
+              }
+            }
+          },
         ]
       }
     }
