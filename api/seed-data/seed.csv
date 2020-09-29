@@ -1,14 +1,14 @@
 patentId,patentTitle,patentTitleLang,patentAbstractText,patentAbstractLang,geneSymbol
-1,My first patent,en,This is the abstract for my first patent,en,gene-alpha
-2,Batmobile,en,The patent describes the Batmobile patent,en,gene-beta
-3,Another patent for dogs,en,Unique term: ardvark,en,gene-alpha
-3,Another patent for dogs,en,Unique term: ardvark,en,gene-beta
-4,Patent beta,en,This is a generic patent abstract,en,delta
-5,Foo,en,This is some text that includes the word beta,en,delta
-5,Foo in French,fr,French abstract,fr,delta
-6,Bar,en,This is a generic patent abstract,en,gamma
-7,Foo Bar,fr,This is a generic patent abstract,en,gamma
-7,Foo Bar,ge,This is a generic patent abstract in German,ge,gamma
-7,Foo Bar,en,This is a generic patent abstract in French,fr,gamma
-8,French only,fr,This is a generic patent abstract in French,fr,gamma
-9,German only,ge,This is a generic patent abstract in German,en,gamma
+1,Patent one,en,This is an abstract for P one. Lorem ipsum dolor sit amet.,en,alpha
+2,Patent two,en,This is an abstract for P two. Lorem ipsum dolor sit amet.,en,alpha
+3,Patent three,en,This is an abstract for P three. Lorem ipsum dolor sit amet.,en,alpha
+3,Patent three,en,This is an abstract for P three. Lorem ipsum dolor sit amet.,en,beta
+4,Patent four,en,This is an abstract for P four. Lorem ipsum dolor sit amet.,en,beta
+5,Patent five,en,This is an abstract for P five. Lorem ipsum dolor sit amet.,en,gamma
+5,Patent cinq,fr,delta This is an abstract for P five. Lorem ipsum dolor sit amet.,fr,gamma
+6,Patent six,en,This is an abstract for P six. Lorem ipsum dolor sit amet.,en,gamma
+7,Patent sept,fr,This is an abstract for P seven. Lorem ipsum dolor sit amet.,en,gamma
+7,Patent sieben,ge,This is an abstract for P seven. Lorem ipsum dolor sit amet.,ge,gamma
+7,Patent seven,en,This is an abstract for P seven. Lorem ipsum dolor sit amet.,fr,delta
+8,Patent huit,fr,This is an abstract for P eight. Lorem ipsum dolor sit amet.,fr,gamma
+9,Patent neun,ge,This is an abstract for P nine. Lorem ipsum dolor sit amet.,en,gamma
