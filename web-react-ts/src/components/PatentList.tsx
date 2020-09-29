@@ -112,6 +112,19 @@ function PatentList(props: any) {
     }))
   }
 
+  const distinctGeneSymbols = (patentTitle: PatentTitle[]): GeneSymbol[] => {
+    const geneSymbols = new Map<string, GeneSymbol>();
+    patentTitle.forEach((title: PatentTitle) => {
+      title.fragments.forEach((fragment: Fragment) => {
+        fragment.mentions.forEach((geneSymbol: GeneSymbol) => {
+          geneSymbols.set(geneSymbol.sid, geneSymbol);
+        })
+      })
+    });
+
+    return Array.from(geneSymbols.values());
+  }
+
   return (
     <Paper className={classes.root}>
       <Title>Patent List</Title>
@@ -189,16 +202,11 @@ function PatentList(props: any) {
                     })}
                   </TableCell>
                   <TableCell>
-                    {n.patentTitle.map((title: PatentTitle, i: number) => {
-                      return title.fragments.map((fragment: Fragment, j: number) => {
-                        return fragment.mentions.map((geneSymbol: GeneSymbol, k: number) => {
-                          return <div key={i + "-" + j + "-" + k}>
-                            {geneSymbol.sid}
-                          </div>
-                        })
-                      })
-                    })
-                    }
+                    {distinctGeneSymbols(n.patentTitle).map((geneSymbol) => {
+                      return <div key={geneSymbol.sid}>
+                        {geneSymbol.sid}
+                      </div>
+                    })}
                   </TableCell>
                 </TableRow>
               )
