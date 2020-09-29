@@ -65,7 +65,7 @@ const GET_PATENT = gql`
 function PatentList(props: any) {
   const { classes } = props
   const [order, setOrder] = React.useState<'asc' | 'desc'>('asc')
-  const [orderBy, setOrderBy] = React.useState('name')
+  const [orderBy, setOrderBy] = React.useState('patentId')
   const [page] = React.useState(0)
   const [rowsPerPage] = React.useState(10)
   const [filterState, setFilterState] = React.useState({ searchTermFilter: '' })
